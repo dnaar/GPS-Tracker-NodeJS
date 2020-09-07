@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proyecto Ubicación</title>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div id="map"></div>
+    <button id="showc" class="material-icons" draggable="false" title="Mostrar coordenadas"
+        aria-label="Mostrar coordenadas" type="button"
+        style="background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
+        arrow_forward_ios
+    </button>
+    <object id="CoordPanel"
+        style="background: none rgb(255, 255, 255); border: 5px; margin: 10px; padding: 5px; position: absolute; border-radius: 2px; height: 240px; width: 240px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 40px;">
+        <text style="white-space: pre-line">
+            Latitud: <text id="lat_text">""</text>
+        </text>
+        <text>
+            Longitud: <text id="long_text">""</text>
+        </text>
+        <text style="white-space: pre-line">
+            Hora: <text id="time_text">""</text>
+        </text>
+        <text>
+            Fecha: <text id="date_text">""</text>
+        </text>
+    </object>
+    <button id="hidec" class="material-icons" draggable="false" title="Mostrar coordenadas"
+        aria-label="Mostrar coordenadas" type="button"
+        style="background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
+        arrow_back_ios
+    </button>
+    <script src="script.js"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
+</body>
+
+</html>
