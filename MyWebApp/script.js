@@ -17,7 +17,7 @@ async function iniciarMap() {
   await updateMarker();
 }
 
-// Función de obtención de datos
+// Función de obtención de sdatos
 async function getData() {
   const _location = [];
   // Obtener datos del listener remoto
@@ -35,12 +35,7 @@ async function updateMarker() {
   try {
     const _location = await getData();
     const coord = { lat: _location[0], lng: _location[1] };
-    markers[0].setMap(null);
-    marker = new google.maps.Marker({
-      position: coord,
-      map: map
-    });
-    markers[0] = marker;
+    markers[0].setPosition(coord);
     _changeText(_location);
   } catch (error) {
     console.log(error);
