@@ -1,13 +1,16 @@
 var map;
 var markers = [];
+const map_bounds = {north: 85, south: -85,west:-179.9999,east:180};
 
 // Inicialización de mapa
 async function iniciarMap() {
   const _location = await getData();
   const coord = { lat: _location[0], lng: _location[1] };
   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 18,
-    center: coord
+    zoom: 2,
+    center: coord,
+    minZoom: 2,
+    restriction: {latLngBounds:map_bounds}
   });
   marker = new google.maps.Marker({
     position: coord,
@@ -16,8 +19,7 @@ async function iniciarMap() {
   markers[0] = marker;
   await updateMarker();
 }
-
-// Función de obtención de sdatos
+// Función de obtención de datos
 async function getData() {
   const _location = [];
   // Obtener datos del listener remoto
@@ -29,7 +31,6 @@ async function getData() {
   _location.push(row[2]);
   return _location;
 }
-
 // Actualizar marcador de localizacion
 async function updateMarker() {
   try {
@@ -42,7 +43,6 @@ async function updateMarker() {
   }
   setTimeout(updateMarker, 1000);
 }
-
 // Función de actualización de datos
 function _changeText(_location) {
   document.getElementById("lat_text").innerHTML = _location[0];
@@ -51,7 +51,10 @@ function _changeText(_location) {
   document.getElementById("time_text").innerHTML = date[0] + " " + date[1];
   document.getElementById("date_text").innerHTML = date[2];
 }
-
+// Función para centrar el mapa al marcador
+function centerMap(){
+  map.setCenter(markers[0].getPosition());
+}
 // Pasos extra para el panel de datos
 document.getElementById("CoordPanel").style.display = "none";
 document.getElementById("hidec").style.display = "none";

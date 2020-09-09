@@ -7,7 +7,13 @@
 </head>
 
 <body>
-    <div id="map"></div>
+    <div id="map" options="device.map1.options"></div>
+    <button onclick="centerMap()" id="cent" class="material-icons" draggable="false" title="Centrar en marcador"
+        aria-label="Centrar en marcador" type="button"
+        style="background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 50%; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 110px; right: 0px;">
+        gps_fixed
+    </button>
+
     <button id="showc" class="material-icons" draggable="false" title="Mostrar coordenadas"
         aria-label="Mostrar coordenadas" type="button"
         style="background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
