@@ -14,6 +14,8 @@ socket.bind(10840);
 // Message receive
 socket.on('message', (msg, rinfo) => {
     _message = msg.toString();
+    _message = _message.split(',');
+    _message = {latitude: parseFloat(_message[0]), longitude: parseFloat(_message[1]), timestamp: _message[2]}
     console.log(_message);
 });
 
