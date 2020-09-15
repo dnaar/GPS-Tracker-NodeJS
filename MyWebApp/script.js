@@ -71,11 +71,13 @@ async function _mostrarHistorial(){
     strokeWeight: 2
   });
   historicpath.setMap(map);
+  document.getElementById("mostrarHistorial").style.display = "none";
   document.getElementById("limpiarHistorial").style.display = "block";
 }
 
 function _limpiarHistorial(){
   document.getElementById("limpiarHistorial").style.display = "none";
+  document.getElementById("mostrarHistorial").style.display = "block";
   historicpath.setMap(null);
 }
 
