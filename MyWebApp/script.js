@@ -1,5 +1,6 @@
 var map;
 var markers = [];
+var historicpath;
 const map_bounds = {north: 85, south: -85,west:-179.9999,east:180};
 
 // Inicialización de mapa
@@ -15,6 +16,10 @@ async function iniciarMap() {
     map: map
   });
   markers[0] = marker;
+  marker2 = new google.maps.Marker({
+    map: map
+  });
+  markers[1] = marker2;
   await updateMarker();
 }
 // Función de obtención de datos
@@ -24,6 +29,7 @@ async function getData() {
   const data = await response.json();
   return data;
 }
+
 // Actualizar marcador de localizacion
 async function updateMarker() {
   try {
@@ -49,9 +55,34 @@ function centerMap(){
   map.setCenter(markers[0].getPosition());
   map.setZoom(18);
 }
+
+async function _mostrarHistorial(){
+  var polyline = [];
+  const response = await fetch('/historial', {method: 'GET'});
+  const data = await response.json();
+  data.forEach(object=>{
+    polyline.push({lat: object.latitude, lng: object.longitude});
+  })
+  historicpath = new google.maps.Polyline({
+    path: polyline,
+    geodesic: true,
+    strokeColor: "#FF0000",
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  historicpath.setMap(map);
+  document.getElementById("limpiarHistorial").style.display = "block";
+}
+
+function _limpiarHistorial(){
+  document.getElementById("limpiarHistorial").style.display = "none";
+  historicpath.setMap(null);
+}
+
 // Pasos extra para el panel de datos
 document.getElementById("CoordPanel").style.display = "none";
 document.getElementById("hidec").style.display = "none";
+document.getElementById("limpiarHistorial").style.display = "none";
 document.getElementById("showc").addEventListener("click", function () {
   document.getElementById("CoordPanel").style.display = "block";
   document.getElementById("hidec").style.display = "block";
