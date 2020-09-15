@@ -28,9 +28,9 @@ async function getData() {
 async function updateMarker() {
   try {
     const _location = await getData();
-    const coord = { lat: _location.latitude, lng: _location.longitude };
+    const coord = { lat: _location[_location.length -1].latitude, lng: _location[_location.length -1].longitude };
     markers[0].setPosition(coord);
-    _changeText(_location);
+    _changeText(_location[_location.length -1]);
   } catch (error) {
     console.log(error);
   }
