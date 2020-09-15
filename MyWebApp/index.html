@@ -7,6 +7,12 @@
 </head>
 
 <body>
+    <div class="container">
+    </div>
+    <div id="branding">
+        <h1>PROYECTO UBICACIÓN</h1>
+    </div>
+    <!-- -------------------------------------------- -->
     <div id="map" options="device.map1.options"></div>
     <button onclick="centerMap()" id="cent" class="material-icons" draggable="false" title="Centrar en marcador"
         aria-label="Centrar en marcador" type="button"
@@ -19,7 +25,7 @@
         style="background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
         arrow_forward_ios
     </button>
-    <object id="CoordPanel"
+    <object id="CoordPanel" class="panel"
         style="background: none rgb(255, 255, 255); border: 5px; margin: 10px; padding: 5px; position: absolute; border-radius: 2px; height: 240px; width: 240px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 40px;">
         <text style="white-space: pre-line">
             Latitud: <text id="lat_text">""</text>
