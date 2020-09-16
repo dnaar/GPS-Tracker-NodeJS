@@ -33,7 +33,7 @@ database.connect((err) => {
 database.connect(function(err) {
     if (err) throw err;
    console.log("Connected!");
-   var sql = "INSERT INTO `data` (`latitud`, `longitud`, `time`, `date`) VALUES  ('"+_message[0]+"', '"+_message[1]+"', '"+_message[3]+"')";
+   var sql = "INSERT INTO `data` (`latitud`, `longitud`, `time`, `date`) VALUES  ('"+_message[0]+"', '"+_message[1]+"', '"+_message[2]+"')";
     db.query(sql, function (err, result) {
       if (err) throw err;
       console.log("Dato ingresado exitosamente");
