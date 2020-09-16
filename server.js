@@ -25,19 +25,20 @@ database.connect((err) => {
     if (err){
         throw err;
     }    
-    console.log('Mysql Connected...');
+    console.log('Se estableció la conexión');
 });
  
 // Message receive
- socket.on('message', (msg, rinfo) => {
-    _message = msg.toString();
-    _message = _message.split(',');
-    _message = {latitude: parseFloat(_message[0]), longitude: parseFloat(_message[1]), timestamp: _message[2]}
-    let sql = 'INSERT INTO data SET ?';
-    let query = database.query(sql, _message, (err, result) =>{
-        if (err) throw err;
+
+database.connect(function(err) {
+    if (err) throw err;
+   console.log("Connected!");
+   var sql = "INSERT INTO `data` (`latitud`, `longitud`, `time`, `date`) VALUES  ('"+_message[0]+"', '"+_message[1]+"', '"+_message[3]+"')";
+    db.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("Dato ingresado exitosamente");
     });
-});
+  });
 
 // Response handler
 app.get('/loc', function (req, res){
@@ -53,15 +54,6 @@ app.get('/loc', function (req, res){
     res.end(JSON.stringify(_message));
 }) */
 
-/* db.connect(function(err) {
-    if (err) throw err;
-   console.log("Connected!");
-   var sql = "INSERT INTO `data` (`latitud`, `longitud`, `time`, `date`) VALUES  ('"+_message+"',  1,  2, '5')";
-    db.query(sql, function (err, result) {
-      if (err) throw err;
-      console.log("1 record inserted");
-    });
-  }); */
 
 
   
