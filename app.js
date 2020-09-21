@@ -12,7 +12,13 @@ const socket = dgram.createSocket('udp4');
 
 socket.bind(10840);
 
-//create connection
+// Credentials for connecting the database
+/* const database = mysql.createConnection({
+    host: 'database-1.cjt2qlohguhd.us-east-1.rds.amazonaws.com',
+    user: 'admin',
+    password: 'diselec3325',
+    database: 'userdb'
+}); */
 const database = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -30,13 +36,16 @@ database.connect((err) => {
  
 // Message receive
 
-database.connect(function(err) {
-    if (err) throw err;
-   console.log("Connected!");
-   var sql = "INSERT INTO `data` (`latitud`, `longitud`, `time`, `date`) VALUES  ('"+_message[0]+"', '"+_message[1]+"', '"+_message[2]+"')";
-    db.query(sql, function (err, result) {
-      if (err) throw err;
-      console.log("Dato ingresado exitosamente");
+
+// UDP message receive and write to database
+socket.on('message', (msg, rinfo) => {
+    var _message;
+    _message = msg.toString();
+    _message = _message.split(',');
+    _message = { latitude: parseFloat(_message[0]), longitude: parseFloat(_message[1]), timestamp: _message[2] }
+    let sql = 'INSERT INTO locations SET ?';
+    let query = database.query(sql, _message, (err, result) => {
+        if (err) throw err;
     });
   });
 

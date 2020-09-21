@@ -49,9 +49,39 @@ function centerMap(){
   map.setCenter(markers[0].getPosition());
   map.setZoom(18);
 }
+
+async function _mostrarHistorial(){
+  var polyline = [];
+  const response = await fetch('/historial', {method: 'GET'});
+  const data = await response.json();
+  data.forEach(object=>{
+    polyline.push({lat: object.latitude, lng: object.longitude});
+  })
+  var historicpath =  await data;
+  historicpath = new google.maps.Polyline({
+    path: polyline,
+    geodesic: true,
+    strokeColor: "#FF0000",
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  historicpath.setMap(map);
+  document.getElementById("mostrarHistorial").style.display = "none";
+  document.getElementById("limpiarHistorial").style.display = "block";
+  
+}
+
+async function _limpiarHistorial(){
+  document.getElementById("limpiarHistorial").style.display = "none";
+  document.getElementById("mostrarHistorial").style.display = "block";
+  historicpath.setMap(null);
+  
+}
+
 // Pasos extra para el panel de datos
-document.getElementById("CoordPanel").style.display = "none";
-document.getElementById("hidec").style.display = "none";
+document.getElementById("CoordPanel").style.display = "none"; 
+document.getElementById("hidec").style.display = "none"; 
+document.getElementById("limpiarHistorial").style.display = "none";
 document.getElementById("showc").addEventListener("click", function () {
   document.getElementById("CoordPanel").style.display = "block";
   document.getElementById("hidec").style.display = "block";
