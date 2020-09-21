@@ -1,6 +1,7 @@
 var map;
 var markers = [];
 var historicpath;
+var addline = false;
 const map_bounds = {north: 85, south: -85,west:-179.9999,east:180};
 
 // Inicialización de mapa
@@ -36,6 +37,10 @@ async function updateMarker() {
     const _location = await getData();
     const coord = { lat: _location.latitude, lng: _location.longitude };
     markers[0].setPosition(coord);
+    if(addline){
+      const path = historicpath.getPath();
+      path.push(markers[0].getPosition());
+    }
     _changeText(_location);
   } catch (error) {
     console.log(error);
@@ -58,6 +63,7 @@ function centerMap(){
 
 async function _mostrarHistorial(){
   var polyline = [];
+  addline = true;
   const response = await fetch('/historial', {method: 'GET'});
   const data = await response.json();
   data.forEach(object=>{
@@ -79,6 +85,7 @@ function _limpiarHistorial(){
   document.getElementById("limpiarHistorial").style.display = "none";
   document.getElementById("mostrarHistorial").style.display = "block";
   historicpath.setMap(null);
+  addline = false;
 }
 
 // Pasos extra para el panel de datos
