@@ -14,10 +14,10 @@ socket.bind(10840);
 
 // Credentials for connecting the database
 const database = mysql.createConnection({
-    host: 'database-1.cjt2qlohguhd.us-east-1.rds.amazonaws.com',
-    user: 'admin',
-    password: 'diselec3325',
-    database: 'userdb',
+    host: '******',
+    user: '********',
+    password: '******',
+    database: '*****',
     
 });
 // Establish connection
