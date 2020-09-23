@@ -2,7 +2,7 @@ var map;
 var markers = [];
 var historicpath;
 var addline = false;
-const map_bounds = {north: 85, south: -85,west:-179.9999,east:180};
+const map_bounds = { north: 85, south: -85, west: -179.9999, east: 180 };
 
 // Inicialización de mapa
 async function iniciarMap() {
@@ -11,7 +11,7 @@ async function iniciarMap() {
     zoom: 6,
     center: initcoord,
     minZoom: 2,
-    restriction: {latLngBounds: map_bounds}
+    restriction: { latLngBounds: map_bounds }
   });
   marker = new google.maps.Marker({
     map: map
@@ -26,7 +26,7 @@ async function iniciarMap() {
 // Función de obtención de datos
 async function getData() {
   // Obtener datos del listener remoto
-  const response = await fetch('/loc', {method: 'GET'});
+  const response = await fetch('/loc', { method: 'GET' });
   const data = await response.json();
   return data;
 }
@@ -37,7 +37,7 @@ async function updateMarker() {
     const _location = await getData();
     const coord = { lat: _location.latitude, lng: _location.longitude };
     markers[0].setPosition(coord);
-    if(addline){
+    if (addline) {
       const path = historicpath.getPath();
       path.push(markers[0].getPosition());
     }
@@ -45,29 +45,33 @@ async function updateMarker() {
   } catch (error) {
     console.log(error);
   }
-  setTimeout(updateMarker, 1000);
+  setTimeout(updateMarker, 5000);
 }
 // Función de actualización de datos
 function _changeText(_location) {
   document.getElementById("lat_text").innerHTML = _location.latitude;
   document.getElementById("long_text").innerHTML = _location.longitude;
-  const date = _location.timestamp.split(" ");
-  document.getElementById("time_text").innerHTML = date[0] + " " + date[1];
-  document.getElementById("date_text").innerHTML = date[2];
+  date = new Date(_location.timestamp)
+  if (date.getMinutes() < 10) {
+    document.getElementById("time_text").innerHTML = date.getHours() + ":0" + date.getMinutes();
+  } else {
+    document.getElementById("time_text").innerHTML = date.getHours() + ":" + date.getMinutes();
+  }
+  document.getElementById("date_text").innerHTML = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
 }
 // Función para centrar el mapa al marcador
-function centerMap(){
+function centerMap() {
   map.setCenter(markers[0].getPosition());
   map.setZoom(18);
 }
 
-async function _mostrarHistorial(){
+async function _mostrarHistorial() {
   var polyline = [];
   addline = true;
-  const response = await fetch('/historial', {method: 'GET'});
+  const response = await fetch('/historial', { method: 'GET' });
   const data = await response.json();
-  data.forEach(object=>{
-    polyline.push({lat: object.latitude, lng: object.longitude});
+  data.forEach(object => {
+    polyline.push({ lat: object.latitude, lng: object.longitude });
   })
   historicpath = new google.maps.Polyline({
     path: polyline,
@@ -81,7 +85,7 @@ async function _mostrarHistorial(){
   document.getElementById("limpiarHistorial").style.display = "block";
 }
 
-function _limpiarHistorial(){
+function _limpiarHistorial() {
   document.getElementById("limpiarHistorial").style.display = "none";
   document.getElementById("mostrarHistorial").style.display = "block";
   historicpath.setMap(null);

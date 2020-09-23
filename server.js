@@ -13,9 +13,10 @@ socket.bind(10840);
 
 // Credentials for connecting the database
 const database = mysql.createConnection({
+    // host: 'database-1.c9rut8vrjbdx.us-east-1.rds.amazonaws.com',
     host: 'localhost',
     user: 'root',
-    password: '********',
+    password: '99914011dn',
     database: 'userdb'
 });
 // Establish connection
@@ -31,7 +32,7 @@ socket.on('message', (msg, rinfo) => {
     var _message;
     _message = msg.toString();
     _message = _message.split(',');
-    _message = { latitude: parseFloat(_message[0]), longitude: parseFloat(_message[1]), timestamp: _message[2] }
+    _message = { latitude: parseFloat(_message[0]), longitude: parseFloat(_message[1]), timestamp: new Date(parseFloat(_message[6]), parseFloat(_message[5]), parseFloat(_message[4]), parseFloat(_message[2]), parseFloat(_message[3])).getTime()};
     let sql = 'INSERT INTO locations SET ?';
     let query = database.query(sql, _message, (err, result) => {
         if (err) throw err;
