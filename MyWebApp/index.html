@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Proyecto Ubicación</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="jquery/jquery.datetimepicker.min.css">
 </head>
 
 <body>
@@ -22,35 +24,63 @@
 
     <button id="showc" class="material-icons" draggable="false" title="Mostrar coordenadas"
         aria-label="Mostrar coordenadas" type="button"
-        style="background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
+        style="background: none rgb(73, 253, 82); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
         arrow_forward_ios
     </button>
     <object id="CoordPanel" class="panel"
-        style="background: none rgb(255, 255, 255); border: 5px; margin: 10px; padding: 5px; position: absolute; border-radius: 2px; height: 240px; width: 240px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 40px;">
-        <text style="white-space: pre-line">
-            Latitud: <text id="lat_text">""</text>
-        </text>
-        <text>
-            Longitud: <text id="long_text">""</text>
-        </text>
-        <text style="white-space: pre-line">
-            Hora: <text id="time_text">""</text>
-        </text>
-        <text>
-            Fecha: <text id="date_text">""</text>
-        </text><br><br>
-        <button onclick="_mostrarHistorial()" id="mostrarHistorial">
-            Mostrar Historico
-        </button><br>
-        <button onclick="_limpiarHistorial()" id="limpiarHistorial">
-            Limpiar Historico
-        </button>
+        style="background: none rgb(73, 253, 82); border: 5px; margin: 10px; padding: 5px; position: absolute; border-radius: 2px; height: 450px; width: 240px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 40px;">
+        <div style="height: 170px;">
+            <h1 style="font-size:15px">Última ubicación conocida:</h1>
+            <text>
+                Latitud: <text id="lat_text">""</text>
+            </text><br>
+            <text>
+                Longitud: <text id="long_text">""</text>
+            </text>
+            <text style="white-space: pre-line">
+                Hora: <text id="time_text">""</text>
+            </text>
+            <text>
+                Fecha: <text id="date_text">""</text>
+            </text><br><br>
+            <button onclick="_mostrarHistorial()" id="mostrarHistorial">
+                Mostrar Historico
+            </button><br>
+            <button onclick="_limpiarHistorial()" id="limpiarHistorial">
+                Limpiar Historico
+            </button><br>
+        </div>
+        <div id="filter">
+            <h1 style="font-size:15px">Filtrar ubicación por tiempo:</h1>
+            <text>Fecha inicial: <input id="datetime" placeholder="Click para editar"></text><br>
+            <text>Fecha final: <input id="datetime2" placeholder="Click para editar"></text><br>
+            <br>
+            <button onclick="updateintervaldate()" id="mostrar_ubicaciones">
+                Mostrar ubicaciones
+            </button><br>
+            <button onclick="clearintervaldate()" id="ocultar_ubicaciones">
+                Ocultar ubicaciones
+            </button><br>
+            <!-- Sider thing -->
+            <div class="slidercontainer">
+                <input type="range" min="1" max= "100" value="50", class="slider", id="pathing"><br>
+                <text id="slidervalue"><text id="slidervalue0"></text> - <text id="slidervalue1"></text></text>
+                
+            </div>
+            <!-- Slider thing -->
+        </div>
     </object>
     <button id="hidec" class="material-icons" draggable="false" title="Mostrar coordenadas"
         aria-label="Mostrar coordenadas" type="button"
-        style="background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
+        style="background: none rgb(73, 253, 82); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
         arrow_back_ios
     </button>
+    <script src="jquery/jquery.js"></script>
+    <script src="jquery/jquery.datetimepicker.full.js"></script>
+    <script>
+        $("#datetime").datetimepicker();
+        $("#datetime2").datetimepicker();
+    </script>
     <script src="script.js"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>

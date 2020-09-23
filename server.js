@@ -4,6 +4,7 @@ const mysql = require('mysql');
 
 app.listen(80);
 app.use(express.static('MyWebApp'));
+app.use(express.json({limit: '1mb'}));
 
 // UDP Listener
 const dgram = require('dgram');
@@ -13,10 +14,9 @@ socket.bind(10840);
 
 // Credentials for connecting the database
 const database = mysql.createConnection({
-    // host: 'database-1.c9rut8vrjbdx.us-east-1.rds.amazonaws.com',
-    host: '**********',
-    user: '*********',
-    password: '***********',
+    host: 'localhost',
+    user: '******',
+    password: '********',
     database: 'userdb'
 });
 // Establish connection
@@ -47,7 +47,14 @@ app.get('/loc', function (req, res) {
         res.end(JSON.stringify(result[0]));
     });
 });
-app.get('/historial', function (req, res) {
+app.post('/filtered', (req, res) => {
+    let sql = `SELECT * FROM locations WHERE timestamp BETWEEN ${req.body.start} and ${req.body.end}`;
+    let query = database.query(sql, (err, result) => {
+        if (err) throw err;
+        res.end(JSON.stringify(result));
+    });
+});
+app.get('/historial', (req, res) => {
     let sql = 'SELECT * FROM locations'
     let query = database.query(sql, (err, result) => {
         if (err) throw err;
