@@ -28,9 +28,13 @@ async function getData() {
 async function updateMarker() {
   try {
     const _location = await getData();
-    const coord = { lat: _location[_location.length -1].latitude, lng: _location[_location.length -1].longitude };
+    const coord = { lat: _location.latitude, lng: _location.longitude };
     markers[0].setPosition(coord);
-    _changeText(_location[_location.length -1]);
+    if(addline){
+      const path = historicpath.getPath();
+      path.push(markers[0].getPosition());
+    }
+    _changeText(_location);
   } catch (error) {
     console.log(error);
   }
