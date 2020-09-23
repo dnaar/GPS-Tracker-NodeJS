@@ -53,13 +53,13 @@ async function updateMarker() {
 function _changeText(_location) {
   document.getElementById("lat_text").innerHTML = _location.latitude;
   document.getElementById("long_text").innerHTML = _location.longitude;
-  date = new Date(_location.timestamp)
-  if (date.getMinutes() < 10) {
-    document.getElementById("time_text").innerHTML = date.getHours() + ":0" + date.getMinutes();
+  datet = new Date(_location.timestamp)
+  if (datet.getMinutes() < 10) {
+    document.getElementById("time_text").innerHTML = datet.getHours() + ":0" + datet.getMinutes();
   } else {
-    document.getElementById("time_text").innerHTML = date.getHours() + ":" + date.getMinutes();
+    document.getElementById("time_text").innerHTML = datet.getHours() + ":" + datet.getMinutes();
   }
-  document.getElementById("date_text").innerHTML = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear();
+  document.getElementById("date_text").innerHTML = datet.getDate() + "/" + (datet.getMonth()+1) + "/" + datet.getFullYear();
 }
 // Función para centrar el mapa al marcador
 function centerMap() {
@@ -97,12 +97,12 @@ async function updateintervaldate() {
   date = { day: date[0], time: date[1] };
   day = date.day.split("/");
   time = date.time.split(":");
-  const init_date = new Date(parseFloat(day[0]), parseFloat(day[1]), parseFloat(day[2]), parseFloat(time[0]), parseFloat(time[1])).getTime();
+  const init_date = new Date(parseFloat(day[0]), parseFloat(day[1]) - 1, parseFloat(day[2]), parseFloat(time[0]), parseFloat(time[1])).getTime();
   var date = document.getElementById("datetime2").value.split(" ");
   date = { day: date[0], time: date[1] };
   day = date.day.split("/");
   time = date.time.split(":");
-  const final_date = new Date(parseFloat(day[0]), parseFloat(day[1]), parseFloat(day[2]), parseFloat(time[0]), parseFloat(time[1])).getTime();
+  const final_date = new Date(parseFloat(day[0]), parseFloat(day[1]) - 1, parseFloat(day[2]), parseFloat(time[0]), parseFloat(time[1])).getTime();
   const time_interval = { start: init_date, end: final_date };
   const options = {
     method: "POST",
@@ -159,14 +159,14 @@ async function updateintervaldate() {
     date0 = document.getElementById("slidervalue0");
     date1 = document.getElementById("slidervalue1");
     if(mindate.getMinutes() < 10){
-      date0.innerHTML = mindate.getDay() + "/"+mindate.getMonth()+ "/"+mindate.getFullYear() + " "+mindate.getHours() + ":0" + mindate.getMinutes();
+      date0.innerHTML = mindate.getDate() + "/"+(mindate.getMonth() + 1)+ "/"+mindate.getFullYear() + " "+mindate.getHours() + ":0" + mindate.getMinutes();
     }else{
-      date0.innerHTML = mindate.getDay() + "/"+mindate.getMonth()+ "/"+mindate.getFullYear() + " "+mindate.getHours() + ":" + mindate.getMinutes();
+      date0.innerHTML = mindate.getDate() + "/"+(mindate.getMonth() + 1)+ "/"+mindate.getFullYear() + " "+mindate.getHours() + ":" + mindate.getMinutes();
     }
     if(maxdate.getMinutes() < 10){
-      date1.innerHTML = maxdate.getDay() + "/"+maxdate.getMonth()+ "/"+maxdate.getFullYear() + " "+maxdate.getHours() + ":0" + maxdate.getMinutes();
+      date1.innerHTML = maxdate.getDate() + "/"+(maxdate.getMonth() + 1)+ "/"+maxdate.getFullYear() + " "+maxdate.getHours() + ":0" + maxdate.getMinutes();
     }else{
-      date1.innerHTML = maxdate.getDay() + "/"+maxdate.getMonth()+ "/"+maxdate.getFullYear() + " "+maxdate.getHours() + ":" + maxdate.getMinutes();
+      date1.innerHTML = maxdate.getDate() + "/"+(maxdate.getMonth() + 1)+ "/"+maxdate.getFullYear() + " "+maxdate.getHours() + ":" + maxdate.getMinutes();
     }
     
   };
