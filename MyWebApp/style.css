@@ -13,7 +13,7 @@ body {
 }
 
 #CoordPanel {
-    background: none rgb(73, 253, 82);
+    background: none rgb(57, 192, 64);
     border: 5px;
     margin: 0px;
     padding: 5px;
@@ -28,7 +28,7 @@ body {
 }
 
 #brandcontainer {
-    background: #162731;
+    background: none rgb(57, 192, 64);
     opacity: 0.7;
     margin-top: 15px;
     margin-left: 10px;
@@ -39,7 +39,7 @@ body {
 }
 
 #branding {
-    color: #ffffff;
+    color: #3a3a3a;
     padding: 1px;
     margin-top: -65px;
     margin-left: 20px;
@@ -48,7 +48,7 @@ body {
 }
 
 #cent {
-    background: none rgb(255, 255, 255);
+    background: none rgb(57, 192, 64);
     border: 0px;
     margin: 10px;
     padding: 0px;

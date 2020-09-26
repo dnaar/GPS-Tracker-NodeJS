@@ -20,38 +20,27 @@
     </button>
     <object id="CoordPanel" class="panel">
         <div style="height: 170px;">
-            <h1 style="font-size:15px">Última ubicación conocida:</h1>
+            <h1 style="font-size:15px">¿Cuándo se supo del camión por  última vez?</h1>
             <text>
                 Hora: <text id="time_text">""</text>
             </text><br>
             <text>
                 Fecha: <text id="date_text">""</text>
             </text><br><br>
-            <button onclick="_mostrarHistorial()" id="mostrarHistorial">
-                Mostrar Historico
-            </button><br>
-            <button onclick="_limpiarHistorial()" id="limpiarHistorial">
-                Limpiar Historico
-            </button><br>
+            <input type="checkbox" id="historial" checked=true><label for="historial">Mostrar dónde ha estado (Linea roja).</label><br>
         </div>
         <div id="filter">
-            <h1 style="font-size:15px">Filtrar ubicación por tiempo:</h1>
+            <h1 style="font-size:15px">¿Dónde estuvo el camión entre las siguientes fechas?</h1>
             <text>Fecha inicial: <input id="datetime" placeholder="Click para editar"></text><br>
             <text>Fecha final: <input id="datetime2" placeholder="Click para editar"></text><br>
             <br>
-            <button onclick="updateintervaldate()" id="mostrar_ubicaciones">
-                Mostrar ubicaciones
-            </button><br>
-            <button onclick="clearintervaldate()" id="ocultar_ubicaciones">
-                Ocultar ubicaciones
-            </button><br>
-            <!-- Sider thing -->
+            <input type="checkbox" id="filtrado" disabled=true><label for="filtrado">Filtrar los lugares (Línea morada).</label><br>
             <div class="slidercontainer">
                 <input type="range" min="1" max= "100" value="50", class="slider", id="pathing"><br>
                 <text id="slidervalue"><text id="slidervalue0"></text> - <text id="slidervalue1"></text></text>
                 
             </div>
-            <!-- Slider thing -->
+            
         </div>
     </object>
     <script src="jquery/jquery.js"></script>

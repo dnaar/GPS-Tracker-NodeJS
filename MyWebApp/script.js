@@ -27,6 +27,7 @@ async function iniciarMap() {
     });
     markers[1] = marker2;
     await updateMarker();
+    await _mostrarHistorial();
 }
 // Función de obtención de datos
 async function getData() {
@@ -86,8 +87,6 @@ async function _mostrarHistorial() {
         map: map
     });
     historicpath.setMap(map);
-    document.getElementById("mostrarHistorial").style.display = "none";
-    document.getElementById("limpiarHistorial").style.display = "block";
 }
 
 // Filtrar el historial de datos
@@ -173,17 +172,41 @@ async function updateintervaldate() {
         }
 
     };
-    document.getElementById("mostrar_ubicaciones").style.display = "none";
-    document.getElementById("ocultar_ubicaciones").style.display = "block";
     document.getElementById("pathing").style.display = "block";
     document.getElementById("slidervalue").style.display = "block";
 }
+var init_check = false;
+var end_check = false;
+const checkFiltrado = document.getElementById("filtrado");
 
 
+document.getElementById("datetime").onblur = function() {
+    if (!(this.value == "")) {
+        init_check = true;
+        checkingbox();
+    }
+};
+document.getElementById("datetime2").onblur = function() {
+    if (!(this.value == "")) {
+        end_check = true;
+        checkingbox();
+    }
+};
+
+function checkingbox() {
+    if (end_check & init_check) {
+        checkFiltrado.disabled = false;
+    }
+}
+checkFiltrado.addEventListener('change', function() {
+    if (this.checked) {
+        updateintervaldate();
+    } else {
+        clearintervaldate();
+    }
+});
 
 function clearintervaldate() {
-    document.getElementById("ocultar_ubicaciones").style.display = "none";
-    document.getElementById("mostrar_ubicaciones").style.display = "block";
     document.getElementById("pathing").style.display = "none";
     document.getElementById("slidervalue").style.display = "none";
     pathingline.setMap(null);
@@ -191,17 +214,16 @@ function clearintervaldate() {
 }
 
 
-function _limpiarHistorial() {
-    document.getElementById("limpiarHistorial").style.display = "none";
-    document.getElementById("mostrarHistorial").style.display = "block";
-    historicpath.setMap(null);
-    addline = false;
-}
+const checkHistorial = document.getElementById("historial");
+checkHistorial.addEventListener('change', function() {
+    if (this.checked) {
+        _mostrarHistorial();
+    } else {
+        historicpath.setMap(null);
+        addline = false;
+    }
+});
 
 // Pasos extra para el panel de datos
 document.getElementById("pathing").style.display = "none";
 document.getElementById("slidervalue").style.display = "none";
-
-
-document.getElementById("limpiarHistorial").style.display = "none";
-document.getElementById("ocultar_ubicaciones").style.display = "none";
