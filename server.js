@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
+const credentials = require('./credentials.json');
 
 app.listen(80);
 app.use(express.static('MyWebApp'));
-app.use(express.json({limit: '1mb'}));
+app.use(express.json({ limit: '1mb' }));
 
 // UDP Listener
 const dgram = require('dgram');
@@ -14,11 +15,12 @@ socket.bind(10840);
 
 // Credentials for connecting the database
 const database = mysql.createConnection({
-    host:'localhost',
-    user: '********',
-    password: '*********',
-    database: 'userdb'
+    host: credentials.host,
+    user: credentials.user,
+    password: credentials.password,
+    database: credentials.database
 });
+
 // Establish connection
 database.connect((err) => {
     if (err) {
@@ -32,7 +34,7 @@ socket.on('message', (msg, rinfo) => {
     var _message;
     _message = msg.toString();
     _message = _message.split(',');
-    _message = { latitude: parseFloat(_message[0]), longitude: parseFloat(_message[1]), timestamp: parseInt(_message[2])};
+    _message = { latitude: parseFloat(_message[0]), longitude: parseFloat(_message[1]), timestamp: parseInt(_message[2]) };
     let sql = 'INSERT INTO locations SET ?';
     let query = database.query(sql, _message, (err, result) => {
         if (err) throw err;
