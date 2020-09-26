@@ -9,37 +9,21 @@
 </head>
 
 <body>
-    <div class="container">
+    <div id="brandcontainer">
     </div>
     <div id="branding">
         <h1>PROYECTO UBICACIÓN</h1>
     </div>
-    <!-- -------------------------------------------- -->
     <div id="map" options="device.map1.options"></div>
-    <button onclick="centerMap()" id="cent" class="material-icons" draggable="false" title="Centrar en marcador"
-        aria-label="Centrar en marcador" type="button"
-        style="background: none rgb(255, 255, 255); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 50%; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 110px; right: 0px;">
+    <button onclick="centerMap()" id="cent" class="material-icons" draggable="false" title="Centrar en marcador" aria-label="Centrar en marcador" type="button">
         gps_fixed
     </button>
-
-    <button id="showc" class="material-icons" draggable="false" title="Mostrar coordenadas"
-        aria-label="Mostrar coordenadas" type="button"
-        style="background: none rgb(73, 253, 82); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
-        arrow_forward_ios
-    </button>
-    <object id="CoordPanel" class="panel"
-        style="background: none rgb(73, 253, 82); border: 5px; margin: 10px; padding: 5px; position: absolute; border-radius: 2px; height: 450px; width: 240px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 40px;">
+    <object id="CoordPanel" class="panel">
         <div style="height: 170px;">
             <h1 style="font-size:15px">Última ubicación conocida:</h1>
             <text>
-                Latitud: <text id="lat_text">""</text>
-            </text><br>
-            <text>
-                Longitud: <text id="long_text">""</text>
-            </text>
-            <text style="white-space: pre-line">
                 Hora: <text id="time_text">""</text>
-            </text>
+            </text><br>
             <text>
                 Fecha: <text id="date_text">""</text>
             </text><br><br>
@@ -70,11 +54,6 @@
             <!-- Slider thing -->
         </div>
     </object>
-    <button id="hidec" class="material-icons" draggable="false" title="Mostrar coordenadas"
-        aria-label="Mostrar coordenadas" type="button"
-        style="background: none rgb(73, 253, 82); border: 0px; margin: 10px; padding: 0px; position: absolute; cursor: pointer;border-radius: 2px; height: 40px; width: 40px; box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px; overflow: hidden; bottom: 40px; left: 0px;">
-        arrow_back_ios
-    </button>
     <script src="jquery/jquery.js"></script>
     <script src="jquery/jquery.datetimepicker.full.js"></script>
     <script>
@@ -82,8 +61,7 @@
         $("#datetime2").datetimepicker();
     </script>
     <script src="script.js"></script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
 </body>
 
 </html>
