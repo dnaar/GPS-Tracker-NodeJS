@@ -42,22 +42,15 @@ socket.on('message', (msg, rinfo) => {
 });
 
 // Response handler and database reader
-app.get('/loc', function (req, res) {
+app.get('/loc', function(req, res) {
     let sql = 'SELECT * FROM locations WHERE idlocations = (SELECT MAX(idlocations)  FROM locations)'
     let query = database.query(sql, (err, result) => {
         if (err) throw err;
         res.end(JSON.stringify(result[0]));
     });
 });
-app.post('/filtered', (req, res) => {
+app.post('/historial', (req, res) => {
     let sql = `SELECT * FROM locations WHERE timestamp BETWEEN ${req.body.start} and ${req.body.end}`;
-    let query = database.query(sql, (err, result) => {
-        if (err) throw err;
-        res.end(JSON.stringify(result));
-    });
-});
-app.get('/historial', (req, res) => {
-    let sql = 'SELECT * FROM locations'
     let query = database.query(sql, (err, result) => {
         if (err) throw err;
         res.end(JSON.stringify(result));

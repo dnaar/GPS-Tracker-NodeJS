@@ -5,6 +5,8 @@ var filteredpath;
 var pathingline;
 var addline = false;
 const map_bounds = { north: 85, south: -85, west: -179.9999, east: 180 };
+const today_date = new Date();
+const today_boundaries = { start: new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate()).getTime(), end: new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate() + 1).getTime() };
 
 // Inicialización de mapa
 async function iniciarMap() {
@@ -14,6 +16,7 @@ async function iniciarMap() {
         center: initcoord,
         minZoom: 2,
         zoomControl: false,
+        mapTypeControl: false,
         fullscreenControl: false,
         streetViewControl: false,
         restriction: { latLngBounds: map_bounds }
@@ -72,7 +75,14 @@ function centerMap() {
 async function _mostrarHistorial() {
     var polyline = [];
     addline = true;
-    const response = await fetch('/historial', { method: 'GET' });
+    const options = {
+        method: "POST",
+        body: JSON.stringify(today_boundaries),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+    const response = await fetch('/historial', options);
     const data = await response.json();
     data.forEach(object => {
         polyline.push({ lat: object.latitude, lng: object.longitude });
@@ -111,7 +121,7 @@ async function updateintervaldate() {
             "Content-Type": "application/json"
         }
     };
-    const response = await fetch('/filtered', options);
+    const response = await fetch('/historial', options);
     const data = await response.json();
     data.forEach(object => {
         polyline.push({ lat: object.latitude, lng: object.longitude });
