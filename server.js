@@ -49,6 +49,7 @@ app.get('/loc', function(req, res) {
         res.end(JSON.stringify(result[0]));
     });
 });
+
 app.post('/historial', (req, res) => {
     let sql = `SELECT * FROM locations WHERE timestamp BETWEEN ${req.body.start} and ${req.body.end}`;
     let query = database.query(sql, (err, result) => {

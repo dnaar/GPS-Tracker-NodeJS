@@ -174,7 +174,6 @@ async function updateintervaldate() {
                 date0.innerHTML = sliderdate.getDate() + "/" + (sliderdate.getMonth() + 1) + "/" + sliderdate.getFullYear() + " " + sliderdate.getHours() + ":" + sliderdate.getMinutes();
             }
         }
-
         document.getElementById("pathing").style.display = "block";
         document.getElementById("slidervalue0").style.display = "block";
     } else {
