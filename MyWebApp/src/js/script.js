@@ -1,37 +1,37 @@
 var map;
 var markers = [];
 var historicpath;
+var historicline;
 var filteredpath;
-var pathingline;
+var filtermarkers = [];
+var pathmarkers = [];
+var historicmarker;
 var addline = false;
-const map_bounds = { north: 85, south: -85, west: -179.9999, east: 180 };
 const today_date = new Date();
 const today_boundaries = { start: new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate()).getTime(), end: new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate() + 1).getTime() };
 
 // Inicialización de mapa
 async function iniciarMap() {
-    const initcoord = { lat: 4.570868, lng: -74.297333 };
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 6,
-        center: initcoord,
-        minZoom: 2,
-        zoomControl: false,
-        mapTypeControl: false,
-        fullscreenControl: false,
-        streetViewControl: false,
-        restriction: { latLngBounds: map_bounds }
+    map = L.map('map', { zoomControl: false }).setView([4.570868, -74.297333], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap Contributors </a><a target="_blank"></a>/ All Icons by <a target="_blank" href="https://icons8.com">Icons8</a>',
+        maxZoom: 18,
+        minZoom: 4
+    }).addTo(map);
+    const truck1icon = L.icon({
+        iconUrl: 'src/icons/first_truck.png',
+        iconSize: [32, 32],
+        shadowSize: [0, 0],
+        iconAnchor: [18, 18],
     });
-    marker = new google.maps.Marker({
-        map: map
-    });
+    var marker = L.marker([0, 0], { icon: truck1icon });
     markers[0] = marker;
-    marker2 = new google.maps.Marker({
-        map: map
-    });
+    var marker2 = L.marker([0, 0]);
     markers[1] = marker2;
     await updateMarker();
     await _mostrarHistorial();
 }
+
 // Función de obtención de datos
 async function getData() {
     // Obtener datos del listener remoto
@@ -45,10 +45,11 @@ async function updateMarker() {
     try {
         const _location = await getData();
         const coord = { lat: _location.latitude, lng: _location.longitude };
-        markers[0].setPosition(coord);
-        if (addline) {
-            const path = historicpath.getPath();
-            path.push(markers[0].getPosition());
+        markers[0].setLatLng(coord).addTo(map);
+        if (addline && historicline.length > 0) {
+            const path = historicpath.getLatLngs();
+            path.push(markers[0].getLatLng());
+            historicpath.setLatLngs(path);
         }
         _changeText(_location);
     } catch (error) {
@@ -56,6 +57,7 @@ async function updateMarker() {
     }
     setTimeout(updateMarker, 5000);
 }
+
 // Función de actualización de datos
 function _changeText(_location) {
     datet = new Date(_location.timestamp)
@@ -68,12 +70,11 @@ function _changeText(_location) {
 }
 // Función para centrar el mapa al marcador
 function centerMap() {
-    map.setCenter(markers[0].getPosition());
-    map.setZoom(18);
+    map.setView(markers[0].getLatLng(), 16);
 }
 
 async function _mostrarHistorial() {
-    var polyline = [];
+    historicline = [];
     addline = true;
     const options = {
         method: "POST",
@@ -85,18 +86,23 @@ async function _mostrarHistorial() {
     const response = await fetch('/historial', options);
     const data = await response.json();
     data.forEach(object => {
-        polyline.push({ lat: object.latitude, lng: object.longitude });
-    })
-    historicpath = new google.maps.Polyline({
-        path: polyline,
-        geodesic: true,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        zIndex: 11,
-        map: map
+        historicline.push({ lat: object.latitude, lng: object.longitude });
     });
-    historicpath.setMap(map);
+    const linestart = L.icon({
+        iconUrl: 'src/icons/start_flag.png',
+        iconSize: [32, 32],
+        shadowSize: [0, 0],
+        iconAnchor: [8, 30],
+    });
+    if (historicline.length > 0) {
+        historicmarker = L.marker(historicline[0], { icon: linestart }).bindPopup("<b>Inicio del recorrido del día.</b>").addTo(map);
+        historicpath = L.polyline(historicline, {
+            color: 'red',
+            lineCap: linestart
+        });
+        historicpath.addTo(map);
+    }
+
 }
 
 // Filtrar el historial de datos
@@ -127,63 +133,59 @@ async function updateintervaldate() {
         polyline.push({ lat: object.latitude, lng: object.longitude });
         timespan.push(object.timestamp);
     });
-    filteredpath = new google.maps.Polyline({
-        path: polyline,
-        geodesic: true,
-        strokeColor: "#6200ff",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        zIndex: 12,
-        map: map
-    });
-    pathingline = new google.maps.Polyline({
-        path: [],
-        geodesic: true,
-        strokeColor: "#00e1ff",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-        zIndex: 13,
-        map: map
-    });
-    mySlider = document.getElementById("pathing");
-    mySlider.min = `${init_date + 150000}`;
-    mySlider.max = `${final_date - 150000}`;
-    mySlider.oninput = function() {
-        var start = parseInt(this.value) - 150000;
-        var finish = parseInt(this.value) + 150000;
-        var countstart = timespan,
-            goal = start;
-        const sliderstart = countstart.reduce((prev, curr) => {
-            return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
+    if (polyline.length > 0) {
+        const linestart = L.icon({
+            iconUrl: 'src/icons/start_flag.png',
+            iconSize: [32, 32],
+            shadowSize: [0, 0],
+            iconAnchor: [8, 30],
         });
-        var countfinish = timespan,
-            goal = finish;
-        const sliderfinish = countfinish.reduce((prev, curr) => {
-            return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
+        const lineend = L.icon({
+            iconUrl: 'src/icons/finish_flag.png',
+            iconSize: [32, 32],
+            shadowSize: [0, 0],
+            iconAnchor: [0, 30],
         });
-        const mindate = new Date(sliderstart);
-        const maxdate = new Date(sliderfinish);
-        minindex = timespan.findIndex(x => x == sliderstart);
-        maxindex = timespan.findIndex((x, i) => x == sliderfinish && timespan[i + 1] != x) + 1;
-        currentpath = polyline.slice(minindex, maxindex);
-        pathingline.setPath(currentpath);
+        const path_icon = L.icon({
+            iconUrl: 'src/icons/path_truck.png',
+            iconSize: [24, 24],
+            shadowSize: [0, 0],
+            iconAnchor: [12, 12],
+        });
+        filtermarkers[0] = L.marker(polyline[0], { icon: linestart }).bindPopup("<b>Inicio del recorrido.</b>").addTo(map);
+        filtermarkers[1] = L.marker(polyline[polyline.length - 1], { icon: lineend }).bindPopup("<b>Fin del recorrido.</b>").addTo(map);
+        filteredpath = L.polyline(polyline, {
+            color: '#6200ff'
+        }).addTo(map);
 
-        date0 = document.getElementById("slidervalue0");
-        date1 = document.getElementById("slidervalue1");
-        if (mindate.getMinutes() < 10) {
-            date0.innerHTML = mindate.getDate() + "/" + (mindate.getMonth() + 1) + "/" + mindate.getFullYear() + " " + mindate.getHours() + ":0" + mindate.getMinutes();
-        } else {
-            date0.innerHTML = mindate.getDate() + "/" + (mindate.getMonth() + 1) + "/" + mindate.getFullYear() + " " + mindate.getHours() + ":" + mindate.getMinutes();
-        }
-        if (maxdate.getMinutes() < 10) {
-            date1.innerHTML = maxdate.getDate() + "/" + (maxdate.getMonth() + 1) + "/" + maxdate.getFullYear() + " " + maxdate.getHours() + ":0" + maxdate.getMinutes();
-        } else {
-            date1.innerHTML = maxdate.getDate() + "/" + (maxdate.getMonth() + 1) + "/" + maxdate.getFullYear() + " " + maxdate.getHours() + ":" + maxdate.getMinutes();
+        const submarker = L.marker([0, 0], { icon: path_icon });
+        pathmarkers[0] = submarker;
+        mySlider = document.getElementById("pathing");
+        mySlider.min = `${0}`;
+        mySlider.max = `${polyline.length - 1}`;
+        mySlider.oninput = function() {
+            var index = parseInt(this.value);
+            const sliderdate = new Date(timespan[index]);
+            pathmarkers[0].setLatLng(polyline[index]).addTo(map);
+            date0 = document.getElementById("slidervalue0");
+            if (sliderdate.getMinutes() < 10) {
+                date0.innerHTML = sliderdate.getDate() + "/" + (sliderdate.getMonth() + 1) + "/" + sliderdate.getFullYear() + " " + sliderdate.getHours() + ":0" + sliderdate.getMinutes();
+            } else {
+                date0.innerHTML = sliderdate.getDate() + "/" + (sliderdate.getMonth() + 1) + "/" + sliderdate.getFullYear() + " " + sliderdate.getHours() + ":" + sliderdate.getMinutes();
+            }
         }
 
-    };
-    document.getElementById("pathing").style.display = "block";
-    document.getElementById("slidervalue").style.display = "block";
+        document.getElementById("pathing").style.display = "block";
+        document.getElementById("slidervalue0").style.display = "block";
+    } else {
+        if (time_interval.start >= time_interval.end) {
+            alert("Por favor ingrese un rango de fechas válido.");
+        } else {
+            alert("No hay recorrido entre esas fechas.");
+        }
+        document.getElementById("filtrado").checked = false;
+
+    }
 }
 var init_check = false;
 var end_check = false;
@@ -218,22 +220,26 @@ checkFiltrado.addEventListener('change', function() {
 
 function clearintervaldate() {
     document.getElementById("pathing").style.display = "none";
-    document.getElementById("slidervalue").style.display = "none";
-    pathingline.setMap(null);
-    filteredpath.setMap(null);
+    document.getElementById("slidervalue0").style.display = "none";
+    filteredpath.remove();
+    filtermarkers[0].remove();
+    filtermarkers[1].remove();
+    pathmarkers[0].remove();
 }
-
 
 const checkHistorial = document.getElementById("historial");
 checkHistorial.addEventListener('change', function() {
     if (this.checked) {
         _mostrarHistorial();
     } else {
-        historicpath.setMap(null);
+        if (historicline.length > 0) {
+            historicpath.remove();
+            historicmarker.remove();
+        }
         addline = false;
     }
 });
 
 // Pasos extra para el panel de datos
 document.getElementById("pathing").style.display = "none";
-document.getElementById("slidervalue").style.display = "none";
+document.getElementById("slidervalue0").style.display = "none";

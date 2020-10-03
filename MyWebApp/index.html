@@ -4,53 +4,71 @@
 <head>
     <title>Proyecto Ubicación</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" href="jquery/jquery.datetimepicker.min.css">
+    <link rel="stylesheet" type="text/css" href="src/css/style.css">
+    <link rel="stylesheet" href="src/jquery/jquery.datetimepicker.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+
 </head>
 
 <body>
-    <div id="brandcontainer">
-    </div>
-    <div id="branding">
-        <h1>PROYECTO UBICACIÓN</h1>
-    </div>
-    <div id="map" options="device.map1.options"></div>
-    <button onclick="centerMap()" id="cent" class="material-icons" draggable="false" title="Centrar en marcador" aria-label="Centrar en marcador" type="button">
-        gps_fixed
-    </button>
-    <object id="CoordPanel" class="panel">
-        <div style="height: 170px;">
-            <h1 style="font-size:15px">¿Cuándo se supo del camión por  última vez?</h1>
-            <text>
-                Hora: <text id="time_text">""</text>
-            </text><br>
-            <text>
-                Fecha: <text id="date_text">""</text>
-            </text><br><br>
-            <input type="checkbox" id="historial" checked=true><label for="historial">Mostrar dónde ha estado (Linea roja).</label><br>
-        </div>
-        <div id="filter">
-            <h1 style="font-size:15px">¿Dónde estuvo el camión entre las siguientes fechas?</h1>
-            <text>Fecha inicial: <input id="datetime" placeholder="Click para editar"></text><br>
-            <text>Fecha final: <input id="datetime2" placeholder="Click para editar"></text><br>
-            <br>
-            <input type="checkbox" id="filtrado" disabled=true><label for="filtrado">Filtrar los lugares (Línea morada).</label><br>
-            <div class="slidercontainer">
-                <input type="range" min="1" max= "100" value="50", class="slider", id="pathing"><br>
-                <text id="slidervalue"><text id="slidervalue0"></text> - <text id="slidervalue1"></text></text>
-                
+    <div id="all_page">
+        <div id="map_container">
+            <div id="brandcontainer">
             </div>
-            
+            <div id="branding">
+                <h1>PROYECTO UBICACIÓN</h1>
+            </div>
+            <div id="map" options="device.map1.options"></div>
+            <button onclick="centerMap()" id="cent" class="material-icons" draggable="false" title="Centrar en marcador" aria-label="Centrar en marcador" type="button">
+                gps_fixed
+            </button>
         </div>
-    </object>
-    <script src="jquery/jquery.js"></script>
-    <script src="jquery/jquery.datetimepicker.full.js"></script>
+        <div id="Panel_container">
+            <div id="CoordPanel">
+                <div id="ubicacion_padding">
+                    <div id="ubicacion">
+                        <h1 style="font-size:22px">Última ubicación conocida del camión:</h1>
+                        <text>
+                        Hora: <text id="time_text"></text>
+                        </text><br>
+                        <text>
+                        Fecha: <text id="date_text"></text>
+                        </text><br><br>
+                        <input type="checkbox" id="historial" checked=true><label for="historial">Recorrido del camión de hoy (Línea roja).</label><br>
+                    </div>
+                </div>
+                <div id="filter_padding">
+                    <div id="filter">
+                        <h1 style="font-size:22px">Recorrido del camión entre fechas:</h1>
+                        <text>Fecha inicial: <br><input id="datetime" placeholder="Click para editar"></text><br><br>
+                        <text>Fecha final: <br><input id="datetime2" placeholder="Click para editar"></text><br><br>
+                        <input type="checkbox" id="filtrado" disabled=true><label for="filtrado">Filtrar los lugares (Línea morada).</label><br>
+                        <div class="slidercontainer">
+                            <input type="range" min="1" max="100" value="50" , class="slider" , id="pathing"><br>
+                            <text id="slidervalue0"></text>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="hints">
+    </div>
+
+
+    <script src="src/jquery/jquery.js"></script>
+    <script src="src/jquery/jquery.datetimepicker.full.js"></script>
     <script>
         $("#datetime").datetimepicker();
         $("#datetime2").datetimepicker();
     </script>
-    <script src="script.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src="src/js/leaflet-routing-machine.js"></script>
+    <script src="src/js/script.js"></script>
+    <script>
+        iniciarMap();
+    </script>
 </body>
 
 </html>
