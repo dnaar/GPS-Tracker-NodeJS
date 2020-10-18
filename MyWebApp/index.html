@@ -14,9 +14,9 @@
     <div id="all_page">
         <div id="map_container">
             <div id="brandcontainer">
-            </div>
-            <div id="branding">
-                <h1>PROYECTO UBICACIÓN</h1>
+                <div id="branding">
+                    <h1 id="brand">PROYECTO UBICACIÓN</h1>
+                </div>
             </div>
             <div id="map" options="device.map1.options"></div>
             <button onclick="centerMap()" id="cent" class="material-icons" draggable="false" title="Centrar en marcador" aria-label="Centrar en marcador" type="button">
@@ -55,8 +55,17 @@
     <script src="src/jquery/jquery.js"></script>
     <script src="src/jquery/jquery.datetimepicker.full.js"></script>
     <script>
-        $("#datetime").datetimepicker();
-        $("#datetime2").datetimepicker();
+        $("#datetime").datetimepicker({
+            defaultTime: '00:00',
+            timepicker: false,
+            onClose: function(selectedDate) {
+                $("#datetime2").datetimepicker({
+                    defaultTime: '23:59',
+                    minDate: selectedDate,
+                    timepicker: false,
+                });
+            }
+        });
     </script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <script src="src/js/script.js"></script>

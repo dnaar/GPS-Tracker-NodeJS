@@ -89,24 +89,26 @@ body {
 }
 
 #brandcontainer {
-    background: none #17252a;
-    opacity: 0.9;
+    position: absolute;
+    width: auto;
+    height: auto;
     top: 15px;
     left: 10px;
-    width: 340px;
-    height: 50px;
-    z-index: 30;
-    position: absolute;
+    background: none rgb(23, 37, 42, 0.9);
+    z-index: 12;
     box-shadow: 10px 10px 5px grey;
 }
 
 #branding {
     color: #feffff;
-    padding: 1px;
-    top: 0px;
-    left: 15px;
-    z-index: 40;
-    position: absolute;
+    margin-left: 10px;
+    margin-right: 10px;
+    z-index: 13;
+}
+
+#brand {
+    margin-top: 5px;
+    margin-bottom: 7px;
 }
 
 #cent {
