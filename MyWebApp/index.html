@@ -33,6 +33,12 @@
                         </text><br>
                         <text>
                             Longitud: <text id="txtlong"></text>
+                        </text><br>
+                        <text>
+                            Lux: <text id="txtlumx"></text>
+                        </text><br>
+                        <text>
+                            Acelerómetro: <text id="txtaccel"></text>
                         </text><br><br>
                         <text>
                         Hora: <text id="time_text"></text>
@@ -49,9 +55,12 @@
                         <text>Fecha inicial: <br><input id="datetime" placeholder="Click para editar"></text><br><br>
                         <text>Fecha final: <br><input id="datetime2" placeholder="Click para editar"></text><br><br>
                         <input type="checkbox" id="filtrado" disabled=true><label for="filtrado">Filtrar los lugares (Línea morada).</label><br>
-                        <div class="slidercontainer">
-                            <input type="range" min="1" max="100" value="50" , class="slider" , id="pathing"><br>
-                            <text id="slidervalue0"></text>
+
+                        <div id="slidercontainer">
+                            <input type="range" min="0" max="100" value="0" , class="slider" , id="pathing"><br><br>
+                            <text>Fecha correspondiente: <text id="slidervalue0"></text></text><br>
+                            <text>Info. Acelerómetro: <text id="slideraccel"></text></text><br>
+                            <text>Info. Lux: <text id="sliderlumx"></text></text><br>
                         </div>
                     </div>
                 </div>

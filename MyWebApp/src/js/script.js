@@ -63,6 +63,8 @@ function _changeText(_location) {
     datet = new Date(_location.timestamp)
     document.getElementById("txtlat").innerHTML = _location.latitude;
     document.getElementById("txtlong").innerHTML = _location.longitude;
+    document.getElementById("txtlumx").innerHTML = _location.lumx;
+    document.getElementById("txtaccel").innerHTML = _location.accel;
     if (datet.getMinutes() < 10) {
         document.getElementById("time_text").innerHTML = datet.getHours() + ":0" + datet.getMinutes();
     } else {
@@ -111,6 +113,7 @@ async function _mostrarHistorial() {
 async function updateintervaldate() {
     var polyline = [];
     var timespan = [];
+    var sensordata = [];
     var date = document.getElementById("datetime").value.split(" ");
     date = { day: date[0], time: date[1] };
     day = date.day.split("/");
@@ -134,6 +137,7 @@ async function updateintervaldate() {
     data.forEach(object => {
         polyline.push({ lat: object.latitude, lng: object.longitude });
         timespan.push(object.timestamp);
+        sensordata.push({ lumx: object.lumx, accel: object.accel });
     });
     if (polyline.length > 0) {
         const linestart = L.icon({
@@ -175,9 +179,11 @@ async function updateintervaldate() {
             } else {
                 date0.innerHTML = sliderdate.getDate() + "/" + (sliderdate.getMonth() + 1) + "/" + sliderdate.getFullYear() + " " + sliderdate.getHours() + ":" + sliderdate.getMinutes();
             }
+            document.getElementById("slideraccel").innerHTML = sensordata[index].accel;
+            document.getElementById("sliderlumx").innerHTML = sensordata[index].lumx;
         }
-        document.getElementById("pathing").style.display = "block";
-        document.getElementById("slidervalue0").style.display = "block";
+        $(document.getElementById("slidercontainer")).slideToggle("fast");
+
     } else {
         if (time_interval.start >= time_interval.end) {
             alert("Por favor ingrese un rango de fechas válido.");
@@ -220,8 +226,7 @@ checkFiltrado.addEventListener('change', function() {
 });
 
 function clearintervaldate() {
-    document.getElementById("pathing").style.display = "none";
-    document.getElementById("slidervalue0").style.display = "none";
+    $(document.getElementById("slidercontainer")).slideToggle("fast");
     filteredpath.remove();
     filtermarkers[0].remove();
     filtermarkers[1].remove();
@@ -240,7 +245,3 @@ checkHistorial.addEventListener('change', function() {
         addline = false;
     }
 });
-
-// Pasos extra para el panel de datos
-document.getElementById("pathing").style.display = "none";
-document.getElementById("slidervalue0").style.display = "none";

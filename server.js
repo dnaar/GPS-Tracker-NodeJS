@@ -3,9 +3,10 @@ const app = express();
 const mysql = require('mysql');
 const credentials = require('./credentials.json');
 
-app.listen(80);
+
 app.use(express.static('MyWebApp'));
 app.use(express.json({ limit: '1mb' }));
+app.listen(80);
 
 // UDP Listener
 const dgram = require('dgram');
@@ -34,14 +35,14 @@ socket.on('message', (msg, rinfo) => {
     var _message;
     _message = msg.toString();
     _message = _message.split(',');
-    _message = { latitude: parseFloat(_message[0]), longitude: parseFloat(_message[1]), timestamp: parseInt(_message[2]) };
+    _message = { latitude: parseFloat(_message[0]), longitude: parseFloat(_message[1]), timestamp: parseInt(_message[2]), lumx: _message[3], accel: parseFloat(_message[4]) };
     let sql = 'INSERT INTO locations SET ?';
     let query = database.query(sql, _message, (err, result) => {
         if (err) throw err;
     });
 });
 
-// Response handler and database reader
+// Response handler for last known location
 app.get('/loc', function(req, res) {
     let sql = 'SELECT * FROM locations WHERE idlocations = (SELECT MAX(idlocations)  FROM locations)'
     let query = database.query(sql, (err, result) => {
@@ -50,6 +51,7 @@ app.get('/loc', function(req, res) {
     });
 });
 
+// Response handler for filtered and today´s locations
 app.post('/historial', (req, res) => {
     let sql = `SELECT * FROM locations WHERE timestamp BETWEEN ${req.body.start} and ${req.body.end}`;
     let query = database.query(sql, (err, result) => {
