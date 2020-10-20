@@ -61,6 +61,8 @@ async function updateMarker() {
 // Función de actualización de datos
 function _changeText(_location) {
     datet = new Date(_location.timestamp)
+    document.getElementById("txtlat").innerHTML = _location.latitude;
+    document.getElementById("txtlong").innerHTML = _location.longitude;
     if (datet.getMinutes() < 10) {
         document.getElementById("time_text").innerHTML = datet.getHours() + ":0" + datet.getMinutes();
     } else {
