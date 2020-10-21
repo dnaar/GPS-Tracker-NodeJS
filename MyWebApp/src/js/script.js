@@ -273,13 +273,8 @@ function v1selected() {
     vehicle = 1;
     document.getElementById("selectHeader").innerHTML = "Camión 1";
     markers[2].remove();
-    updateMarker();
-    if (document.getElementById("filtrado").checked) {
-        clearintervaldate();
-        updateintervaldate();
-    }
+    addline = false;
     if (checkHistorial.checked) {
-
         if (historicline.length > 0) {
             historicpath.remove();
             historicmarker.remove();
@@ -292,6 +287,11 @@ function v1selected() {
         }
         addline = false;
     }
+    if (document.getElementById("filtrado").checked) {
+        clearintervaldate();
+        updateintervaldate();
+    }
+    updateMarker();
     $(document.getElementById("options")).slideToggle("fast");
     document.getElementById("checked1").style.display = "inline";
     document.getElementById("checked2").style.display = "none";
@@ -301,11 +301,7 @@ function v2selected() {
     vehicle = 2;
     document.getElementById("selectHeader").innerHTML = "Camión 2";
     markers[1].remove();
-    updateMarker();
-    if (document.getElementById("filtrado").checked) {
-        clearintervaldate();
-        updateintervaldate();
-    }
+    addline = false;
     if (checkHistorial.checked) {
         if (historicline.length > 0) {
             historicpath.remove();
@@ -319,6 +315,11 @@ function v2selected() {
         }
         addline = false;
     }
+    if (document.getElementById("filtrado").checked) {
+        clearintervaldate();
+        updateintervaldate();
+    }
+    updateMarker();
     $(document.getElementById("options")).slideToggle("fast");
     document.getElementById("checked1").style.display = "none";
     document.getElementById("checked2").style.display = "inline";
