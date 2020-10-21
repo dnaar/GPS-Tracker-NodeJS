@@ -31,9 +31,9 @@ async function iniciarMap() {
         shadowSize: [0, 0],
         iconAnchor: [18, 18],
     });
-    var marker = L.marker([0, 0], { icon: truck1icon });
+    var marker = L.marker([0, 0], { icon: truck1icon, interactive: false });
     markers[1] = marker;
-    var marker2 = L.marker([0, 0], { icon: truck2icon });
+    var marker2 = L.marker([0, 0], { icon: truck2icon, interactive: false });
     markers[2] = marker2;
     await updateMarker();
     await _mostrarHistorial();
@@ -116,7 +116,8 @@ async function _mostrarHistorial() {
         historicmarker = L.marker(historicline[0], { icon: linestart }).bindPopup("<b>Inicio del recorrido del día.</b>").addTo(map);
         historicpath = L.polyline(historicline, {
             color: lcolor,
-            lineCap: linestart
+            lineCap: linestart,
+            interactive: false
         });
         historicpath.addTo(map);
     }
@@ -181,7 +182,8 @@ async function updateintervaldate() {
         filtermarkers[0] = L.marker(polyline[0], { icon: linestart }).bindPopup("<b>Inicio del recorrido.</b>").addTo(map);
         filtermarkers[1] = L.marker(polyline[polyline.length - 1], { icon: lineend }).bindPopup("<b>Fin del recorrido.</b>").addTo(map);
         filteredpath = L.polyline(polyline, {
-            color: lcolor
+            color: lcolor,
+            interactive: false
         }).addTo(map);
         const submarker = L.marker([0, 0], { icon: path_icon });
         pathmarkers[0] = submarker;
@@ -269,6 +271,7 @@ checkHistorial.addEventListener('change', function() {
 
 function v1selected() {
     vehicle = 1;
+    document.getElementById("selectHeader").innerHTML = "Camión 1";
     markers[2].remove();
     updateMarker();
     if (document.getElementById("filtrado").checked) {
@@ -296,6 +299,7 @@ function v1selected() {
 
 function v2selected() {
     vehicle = 2;
+    document.getElementById("selectHeader").innerHTML = "Camión 2";
     markers[1].remove();
     updateMarker();
     if (document.getElementById("filtrado").checked) {
