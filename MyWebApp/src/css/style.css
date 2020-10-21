@@ -52,7 +52,7 @@ body {
 #filter_padding {
     background: none rgb(23, 37, 42, 0.8);
     position: relative;
-    top: 10%;
+    top: 13%;
     left: 5%;
     height: auto;
     width: 90%;
@@ -72,10 +72,56 @@ body {
 #ubicacion_padding {
     background: none rgb(23, 37, 42, 0.8);
     position: relative;
+    top: 10%;
+    left: 5%;
+    height: auto;
+    width: 90%;
+}
+
+#selectvehicle {
+    position: relative;
+    color: #feffff;
+    padding-right: 10%;
+    padding-left: 10%;
+    padding-top: 1%;
+    padding-bottom: 5%;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
+}
+
+#select_padding {
+    background: none rgb(23, 37, 42, 0.8);
+    position: relative;
     top: 6%;
     left: 5%;
     height: auto;
     width: 90%;
+}
+
+#options {
+    display: none;
+    width: auto;
+}
+
+#op1c {
+    height: fit-content;
+    border-radius: 4px;
+}
+
+#op2c {
+    height: fit-content;
+    border-radius: 4px;
+}
+
+#op1c:hover {
+    background: #2b7a78;
+}
+
+#op2c:hover {
+    background: #2b7a78;
+}
+
+#checked2 {
+    display: none;
 }
 
 #CoordPanel {
