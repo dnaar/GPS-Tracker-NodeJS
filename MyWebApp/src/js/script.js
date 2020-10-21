@@ -11,6 +11,9 @@ var vehicle = 1;
 const today_date = new Date();
 const today_boundaries = { start: new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate()).getTime(), end: new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate() + 1).getTime() };
 
+var selecting = false;
+
+
 // Inicialización de mapa
 async function iniciarMap() {
     map = L.map('map', { zoomControl: false }).setView([4.570868, -74.297333], 6);
@@ -269,8 +272,11 @@ checkHistorial.addEventListener('change', function() {
     }
 });
 
-function v1selected() {
+async function v1selected() {
+    while (selecting) {}
+    selecting = true;
     vehicle = 1;
+    $(document.getElementById("options")).slideToggle("fast");
     document.getElementById("selectHeader").innerHTML = "Camión 1";
     markers[2].remove();
     addline = false;
@@ -279,7 +285,7 @@ function v1selected() {
             historicpath.remove();
             historicmarker.remove();
         }
-        _mostrarHistorial();
+        await _mostrarHistorial();
     } else {
         if (historicline.length > 0) {
             historicpath.remove();
@@ -289,16 +295,19 @@ function v1selected() {
     }
     if (document.getElementById("filtrado").checked) {
         clearintervaldate();
-        updateintervaldate();
+        await updateintervaldate();
     }
-    updateMarker();
-    $(document.getElementById("options")).slideToggle("fast");
+    await updateMarker();
     document.getElementById("checked1").style.display = "inline";
     document.getElementById("checked2").style.display = "none";
+    selecting = false;
 }
 
-function v2selected() {
+async function v2selected() {
+    while (selecting) {}
+    selecting = true;
     vehicle = 2;
+    $(document.getElementById("options")).slideToggle("fast");
     document.getElementById("selectHeader").innerHTML = "Camión 2";
     markers[1].remove();
     addline = false;
@@ -307,7 +316,7 @@ function v2selected() {
             historicpath.remove();
             historicmarker.remove();
         }
-        _mostrarHistorial();
+        await _mostrarHistorial();
     } else {
         if (historicline.length > 0) {
             historicpath.remove();
@@ -317,15 +326,16 @@ function v2selected() {
     }
     if (document.getElementById("filtrado").checked) {
         clearintervaldate();
-        updateintervaldate();
+        await updateintervaldate();
     }
-    updateMarker();
-    $(document.getElementById("options")).slideToggle("fast");
+    await updateMarker();
     document.getElementById("checked1").style.display = "none";
     document.getElementById("checked2").style.display = "inline";
-
+    selecting = false;
 }
 
 function showoptions() {
-    $(document.getElementById("options")).slideToggle("fast");
+    if (!selecting) {
+        $(document.getElementById("options")).slideToggle("fast");
+    }
 }
