@@ -60,14 +60,13 @@ body {
     margin-bottom: 5%;
 }
 
-#ubicacion {
+.ubicacion {
     position: relative;
     color: #feffff;
     padding-right: 10%;
     padding-left: 10%;
     padding-top: 1%;
     padding-bottom: 5%;
-    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
 }
 
 #ubicacion_padding {
@@ -77,6 +76,7 @@ body {
     left: 5%;
     height: auto;
     width: 90%;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.3);
 }
 
 #selectvehicle {
@@ -183,7 +183,7 @@ body {
     transform: translateY(-7px);
 }
 
-#pathing {
+.slider {
     -webkit-appearance: none;
     width: 100%;
     height: 15px;
@@ -226,7 +226,7 @@ body {
     opacity: 1;
 }
 
-#slidercontainer {
+.slidercontainer {
     display: none;
     padding-top: 15px;
 }

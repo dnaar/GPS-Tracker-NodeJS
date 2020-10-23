@@ -42,40 +42,69 @@
                     </div>
                 </div>
                 <div id="ubicacion_padding">
-                    <div id="ubicacion">
-                        <h1 style="font-size:22px">Última ubicación conocida del camión:</h1>
+                    <br>
+                    <div id="ubicacion1" class="ubicacion">
+                        <h1 style="font-size:22px">Última ubicación conocida del camión 1:</h1>
                         <text>
-                            Latitud: <text id="txtlat"></text>
+                            Latitud: <text id="txtlat1"></text>
                         </text><br>
                         <text>
-                            Longitud: <text id="txtlong"></text>
+                            Longitud: <text id="txtlong1"></text>
                         </text><br>
                         <text>
-                            Lux: <text id="txtlumx"></text>
+                            Lux: <text id="txtlumx1"></text>
                         </text><br>
                         <text>
-                            Acelerómetro: <text id="txtaccel"></text>
+                            Acelerómetro: <text id="txtaccel1"></text>
                         </text><br><br>
                         <text>
-                        Hora: <text id="time_text"></text>
+                        Hora: <text id="time_text1"></text>
                         </text><br>
                         <text>
-                        Fecha: <text id="date_text"></text>
+                        Fecha: <text id="date_text1"></text>
                         </text><br><br>
-                        <input type="checkbox" id="historial" checked=true><label for="historial">Recorrido del camión de hoy.</label><br>
+                        <input type="checkbox" id="historial1" checked=true><label for="historial1">Recorrido del camión de hoy.</label><br>
+                    </div>
+                    <div id="ubicacion2" class="ubicacion" style="border-top: 5px solid #feffff;display:none;">
+                        <h1 style="font-size:22px">Última ubicación conocida del camión 2:</h1>
+                        <text>
+                            Latitud: <text id="txtlat2"></text>
+                        </text><br>
+                        <text>
+                            Longitud: <text id="txtlong2"></text>
+                        </text><br>
+                        <text>
+                            Lux: <text id="txtlumx2"></text>
+                        </text><br>
+                        <text>
+                            Acelerómetro: <text id="txtaccel2"></text>
+                        </text><br><br>
+                        <text>
+                        Hora: <text id="time_text2"></text>
+                        </text><br>
+                        <text>
+                        Fecha: <text id="date_text2"></text>
+                        </text><br><br>
+                        <input type="checkbox" id="historial2" checked=true><label for="historial2">Recorrido del camión de hoy.</label><br>
                     </div>
                 </div>
                 <div id="filter_padding">
                     <div id="filter">
                         <h1 style="font-size:22px">Recorrido del camión entre fechas:</h1>
-                        <text>Fecha inicial: <br><input id="datetime" placeholder="Click para editar"></text><br><br>
-                        <text>Fecha final: <br><input id="datetime2" placeholder="Click para editar"></text><br><br>
+                        <text>Fecha inicial: <br><input id="datetime" placeholder="Click para editar" style="width:95%"></text><br><br>
+                        <text>Fecha final: <br><input id="datetime2" placeholder="Click para editar" style="width:95%"></text><br><br>
                         <input type="checkbox" id="filtrado" disabled=true><label for="filtrado">Filtrar los lugares.</label><br>
-                        <div id="slidercontainer">
-                            <input type="range" min="0" max="100" value="0" , class="slider" , id="pathing"><br><br>
-                            <text>Fecha correspondiente: <text id="slidervalue0"></text></text><br>
-                            <text>Info. Acelerómetro: <text id="slideraccel"></text></text><br>
-                            <text>Info. Lux: <text id="sliderlumx"></text></text><br>
+                        <div id="slidercontainer1" class="slidercontainer">
+                            <input type="range" min="0" max="100" value="0" , class="slider" , id="pathing1"><br><br>
+                            <text>Fecha correspondiente: <text id="sliderdate1"></text></text><br>
+                            <text>Info. Acelerómetro: <text id="slideraccel1"></text></text><br>
+                            <text>Info. Lux: <text id="sliderlumx1"></text></text><br>
+                        </div>
+                        <div id="slidercontainer2" class="slidercontainer">
+                            <input type="range" min="0" max="100" value="0" , class="slider" , id="pathing2"><br><br>
+                            <text>Fecha correspondiente: <text id="sliderdate2"></text></text><br>
+                            <text>Info. Acelerómetro: <text id="slideraccel2"></text></text><br>
+                            <text>Info. Lux: <text id="sliderlumx2"></text></text><br>
                         </div>
                     </div>
                 </div>
