@@ -1,7 +1,5 @@
 var map;
 var markers = [];
-
-
 var historicpath = [];
 var filteredpath = [];
 var filtermarkers = [, [],
@@ -11,15 +9,11 @@ var pathmarkers = [, [],
     []
 ];
 var historicmarker = [];
-
 const today_date = new Date();
 const today_boundaries = { start: new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate()).getTime(), end: new Date(today_date.getFullYear(), today_date.getMonth(), today_date.getDate() + 1).getTime() };
-
 const vehicle = { vehicle1: 1, vehicle2: 2 };
 var selected = [, true, false];
 var addline = [, false, false];
-
-
 // Inicialización de mapa
 async function iniciarMap() {
     map = L.map('map', { zoomControl: false }).setView([4.570868, -74.297333], 6);
@@ -53,14 +47,12 @@ async function iniciarMap() {
         updateMarker(vehicle.vehicle2);
     }, 1000);
 }
-
 // Función de obtención de datos
 async function getData(vehicle) {
     const response = await fetch(`/loc/${vehicle}`, { method: 'GET' });
     const data = await response.json();
     return data;
 }
-
 // Actualizar marcador de localizacion
 async function updateMarker(vehicle) {
     if (!selected[vehicle]) {
@@ -81,7 +73,6 @@ async function updateMarker(vehicle) {
     }
 }
 // FF00E0   Color camion 2
-
 // Función de actualización de datos
 function _changeText(_location, vehicle) {
     datet = new Date(_location.timestamp)
@@ -105,7 +96,6 @@ function centerMap() {
     }
 
 }
-
 async function _mostrarHistorial(vehicle) {
     var historicline = [];
     addline[vehicle] = true;
@@ -143,9 +133,7 @@ async function _mostrarHistorial(vehicle) {
         });
         historicpath[vehicle].addTo(map);
     }
-
 }
-
 // Filtrar el historial de datos
 async function updateintervaldate(vehicle) {
     var polyline = [];
@@ -226,24 +214,20 @@ async function updateintervaldate(vehicle) {
             document.getElementById(`slideraccel${vehicle}`).innerHTML = sensordata[index].accel;
             document.getElementById(`sliderlumx${vehicle}`).innerHTML = sensordata[index].lumx;
         }
-
     } else {
         if (time_interval.start >= time_interval.end) {
             alert("Por favor ingrese un rango de fechas válido.");
-            $(document.getElementById(`slidercontainer${vehicle}`)).slideToggle(0);
+            $(document.getElementById(`slidercontainer${vehicle}`)).slideUp(0);
         } else {
             alert("No hay recorrido entre esas fechas.");
-            $(document.getElementById(`slidercontainer${vehicle}`)).slideToggle(0);
+            $(document.getElementById(`slidercontainer${vehicle}`)).slideUp(0);
         }
         document.getElementById("filtrado").checked = false;
-
     }
 }
 var init_check = false;
 var end_check = false;
 const checkFiltrado = document.getElementById("filtrado");
-
-
 document.getElementById("datetime").onblur = function() {
     if (!(this.value == "")) {
         init_check = true;
@@ -290,7 +274,6 @@ function clearintervaldate(vehicle) {
     filtermarkers[vehicle][1].remove();
     pathmarkers[vehicle][0].remove();
 }
-
 const checkHistorial1 = document.getElementById("historial1");
 const checkHistorial2 = document.getElementById("historial2");
 checkHistorial1.addEventListener('change', function() {
@@ -328,7 +311,6 @@ checkHistorial2.addEventListener('change', function() {
         }
     }
 });
-
 async function v1selected() {
     selected[1] = !selected[1];
     addline[1] = !addline[1];
@@ -378,7 +360,6 @@ async function v1selected() {
         }
     }
 }
-
 async function v2selected() {
     selected[2] = !selected[2];
     addline[2] = !addline[2];
@@ -428,9 +409,6 @@ async function v2selected() {
         }
     }
 }
-
-
-
 
 function showoptions() {
     $(document.getElementById("options")).slideToggle("fast");
